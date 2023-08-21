@@ -25,29 +25,29 @@ async function getName() {
 }
 
 const getPosts = async () => {
-   
+
     onSnapshot(collection(db, "postsCollection"), (snapshot) => {
         snapshot.docChanges().forEach((change) => {
-            // console.log(snapshot)
-            console.log(change.doc.data());
+            console.log("change", change.doc.id)
+            // console.log(change.doc.data());
             postsParent.innerHTML += `  <div class="border border-gray-200 p-6 rounded-lg">
             <div
                 class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
                 <img src="./Assets/pic.jpg" alt="">
 
             </div>
-            <h2  class="text-lg text-gray-900 font-medium title-font mb-2">${change.doc.data().post}</h2>
+            <h2  class="text-2xl text-gray-900 font-medium title-font mb-2">${change.doc.data().post}</h2>
             <p  class="leading-relaxed text-base">${change.doc.data().desc}</p>
-            <p>Date: ${change.doc.data().time}</p>
+            <p class="leading-relaxed text-base font-medium">Date & Time : ${change.doc.data().time}</p>
 
             <div class="mt-5">
-            <a onclick = "delBtn()" class="mr-3 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+            <a onclick = "delBtn('${change.doc.id}')" class="mr-3 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
                >Delete</a>
             <a onclick = "editBtn()" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
                 >Edit</a>
         </div>
         </div>`
-       
+
         })
 
     });
@@ -55,12 +55,14 @@ const getPosts = async () => {
 }
 getPosts()
 
-
 publishBtn.addEventListener("click", addPosts)
 async function addPosts() {
     const post = document.getElementById("post");
     const desc = document.getElementById("desc");
     const time = new Date();
+    console.log(post,
+        desc,
+        time)
     console.log("time", time.toLocaleString())
     if (!post.value || !desc.value) {
         alert("Please adding a blog");
@@ -78,7 +80,6 @@ async function addPosts() {
         });
         console.log("Document written with ID: ", docRef.id);
 
-
         post.value = ""
         desc.value = ""
 
@@ -88,29 +89,32 @@ async function addPosts() {
 
 }
 
-const logoutBtn = document.getElementById("logOut");
-logoutBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    localStorage.removeItem("user")
-    window.location.replace("/login.html")
-});
+
 
 
 async function editBtn() {
 
 }
-// async function delBtn() {
+async function delBtn(id) {
 
-//     try {
-//         await deleteDoc(doc(db, "postsCollection", docRef.id));
-//     } catch (error) {
-//         console.log(error.message)
+    try {
+        console.log("id", id)
+        await deleteDoc(doc(db, "postsCollection", id));
+    } catch (error) {
+        console.log(error)
 
-//     }
-// }
+    }
+}
+
+const logoutBtn = document.getElementById("logOut");
+logoutBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    localStorage.removeItem("user")
+    window.location.replace("/index.html")
+});
+
+window.delBtn = delBtn
+// window.editBtn = editBtn
 
 
-// window.delBtn = delBtn
-window.editBtn = editBtn
-
-
+export { getPosts }

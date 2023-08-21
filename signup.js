@@ -35,7 +35,7 @@ async function signUp() {
         }
         const userDoc = doc(db, "usersCollection", userAuth.user.uid);
         const userData = await setDoc(userDoc, userObj);
-        window.location.assign("/")
+        window.location.assign("login.html")
         console.log(userAuth.user.uid)
     } 
     catch (error) {
