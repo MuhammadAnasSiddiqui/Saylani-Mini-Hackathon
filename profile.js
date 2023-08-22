@@ -16,6 +16,7 @@ const fullNameElement = document.getElementById("fullName");
 const emailElement = document.getElementById("email");
 // const phoneNumberElement = document.getElementById("phoneNumber");
 const logoutBtn = document.getElementById("logoutBtn");
+const blogDash = document.getElementById("blogDash");
 
 
 onAuthStateChanged(auth, async (user) => {
@@ -37,11 +38,9 @@ logoutBtn.addEventListener("click", () => {
     window.location.replace("./index.html");
 });
 
-
-
-
-
-
-
+blogDash.addEventListener("click", () => {
+    
+    window.location.replace("./dashboard.html");
+});
 
 

@@ -8,7 +8,7 @@ const getPosts = async () => {
         snapshot.docChanges().forEach((change) => {
             // console.log(snapshot)
             console.log(change.doc.data().time);
-            uiSec.innerHTML += `  <div class="border border-gray-200 p-6 rounded-lg">
+            uiSec.innerHTML += `  <div class="border border-gray-200 p-6 rounded-lg mx-16 my-16">
             <div
                 class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
                 <img src="./Assets/pic.jpg" alt="">
@@ -18,12 +18,6 @@ const getPosts = async () => {
             <p  class="leading-relaxed text-base font-medium">${change.doc.data().desc}</p>
             <p class="leading-relaxed text-base font-medium">Date & Time : ${change.doc.data().time}</p>
 
-            <div class="mt-5">
-            <a onclick = "delBtn('${change.doc.id}')" class="mr-3 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-               >Delete</a>
-            <a onclick = "editBtn()" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                >Edit</a>
-        </div>
         </div>`
 
         })
